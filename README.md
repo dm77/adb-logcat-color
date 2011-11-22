@@ -10,3 +10,8 @@ Usage
 2.) Download and run the adb-logcat-color.rb script:
     
       ruby adb-logcat-color.rb
+
+Preview
+-------
+
+![Sample Screenshot](https://github.com/DushyanthMaguluru/adb-logcat-color/raw/master/screenshot.png)
