@@ -12,7 +12,8 @@ patterns = {"V/" => {:fg => "black", :bg => "blue",    :label => "[ VERBOSE ]"},
             "S/" => {:fg => "black", :bg => "white",   :label => "[  SILENT ]"}}
 
 
-IO.popen("adb logcat") do |f|
+# Ruby 1.9 support passing an array - move to this eventually
+IO.popen("adb logcat #{ARGV.join(' ')}") do |f|
   while line = f.gets
     line.sub!(/\(\s*\d+\)/, "")
     line.gsub!("\r\n", "")
