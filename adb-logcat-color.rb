@@ -1,16 +1,19 @@
 #!/usr/bin/ruby
+
+require 'rubygems'
 require 'smart_colored/extend'
 
 patterns = {"V/" => {:fg => "black", :bg => "blue",    :label => "[ VERBOSE ]"},
             "D/" => {:fg => "black", :bg => "cyan",    :label => "[  DEBUG  ]"},
-            "I/" => {:fg => "black", :bg => "cyan",    :label => "[  INFO   ]"},
+            "I/" => {:fg => "black", :bg => "green",   :label => "[  INFO   ]"},
             "W/" => {:fg => "black", :bg => "yellow",  :label => "[ WARNING ]"},
             "E/" => {:fg => "black", :bg => "red",     :label => "[  ERROR  ]"},
             "F/" => {:fg => "black", :bg => "magenta", :label => "[  FATAL  ]"},
             "S/" => {:fg => "black", :bg => "white",   :label => "[  SILENT ]"}}
 
 
-IO.popen("adb logcat") do |f|
+# Ruby 1.9 support passing an array - move to this eventually
+IO.popen("adb logcat #{ARGV.join(' ')}") do |f|
   while line = f.gets
     line.sub!(/\(\s*\d+\)/, "")
     line.gsub!("\r\n", "")
