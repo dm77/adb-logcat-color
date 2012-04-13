@@ -1,4 +1,6 @@
 #!/usr/bin/ruby
+
+require 'rubygems'
 require 'smart_colored/extend'
 
 patterns = {"V/" => {:fg => "black", :bg => "blue",    :label => "[ VERBOSE ]"},
