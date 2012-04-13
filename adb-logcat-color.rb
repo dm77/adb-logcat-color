@@ -5,7 +5,7 @@ require 'smart_colored/extend'
 
 patterns = {"V/" => {:fg => "black", :bg => "blue",    :label => "[ VERBOSE ]"},
             "D/" => {:fg => "black", :bg => "cyan",    :label => "[  DEBUG  ]"},
-            "I/" => {:fg => "black", :bg => "cyan",    :label => "[  INFO   ]"},
+            "I/" => {:fg => "black", :bg => "green",   :label => "[  INFO   ]"},
             "W/" => {:fg => "black", :bg => "yellow",  :label => "[ WARNING ]"},
             "E/" => {:fg => "black", :bg => "red",     :label => "[  ERROR  ]"},
             "F/" => {:fg => "black", :bg => "magenta", :label => "[  FATAL  ]"},
