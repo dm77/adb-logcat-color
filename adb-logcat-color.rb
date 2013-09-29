@@ -3,13 +3,25 @@
 require 'rubygems'
 require 'smart_colored/extend'
 
-$patterns = {"V/" => {:fg => "black", :bg => "blue",    :label => "[ VERBOSE ]"},
-            "D/" => {:fg => "black", :bg => "cyan",    :label => "[  DEBUG  ]"},
-            "I/" => {:fg => "black", :bg => "green",   :label => "[  INFO   ]"},
-            "W/" => {:fg => "black", :bg => "yellow",  :label => "[ WARNING ]"},
-            "E/" => {:fg => "black", :bg => "red",     :label => "[  ERROR  ]"},
-            "F/" => {:fg => "black", :bg => "magenta", :label => "[  FATAL  ]"},
-            "S/" => {:fg => "black", :bg => "white",   :label => "[  SILENT ]"}}
+VERBOSE = 0
+DEBUG   = 1
+INFO    = 2
+WARNING = 3
+ERROR   = 4
+FATAL   = 5
+SILENT  = 6
+
+DEFAULT_LEVEL = DEBUG
+
+$patterns = {"V/" => {:fg => "black", :bg => "blue",    :label => "[ VERBOSE ]", :level => VERBOSE},
+            "D/" => {:fg => "black", :bg => "cyan",    :label => "[  DEBUG  ]", :level => DEBUG},
+            "I/" => {:fg => "black", :bg => "green",   :label => "[  INFO   ]", :level => INFO},
+            "W/" => {:fg => "black", :bg => "yellow",  :label => "[ WARNING ]", :level => WARNING},
+            "E/" => {:fg => "black", :bg => "red",     :label => "[  ERROR  ]", :level => ERROR},
+            "F/" => {:fg => "black", :bg => "magenta", :label => "[  FATAL  ]", :level => FATAL},
+            "S/" => {:fg => "black", :bg => "white",   :label => "[  SILENT ]", :level => SILENT}}
+
+
 
 def colorize_line(line)
   line.sub!(/\(\s*\d+\)/, "")
@@ -24,9 +36,16 @@ def colorize_line(line)
     label = $patterns[match][:label]
     fg = $patterns[match][:fg]
     bg = $patterns[match][:bg]
-    print label.send("#{fg}_on_#{bg}")
-    puts line.send("#{bg}_on_#{fg}")
+    level = $patterns[match][:level]
+    if filter_log?(level)
+      print label.send("#{fg}_on_#{bg}")
+      puts line.send("#{bg}_on_#{fg}")
+    end
   end
+end
+
+def filter_log?(level)
+  level >= DEFAULT_LEVEL
 end
 
 use_argf=ARGV.length == 1 and File.exists?(ARGV[0])
@@ -43,4 +62,3 @@ else
     end
   end
 end
-
